@@ -1,13 +1,16 @@
 """
 Runs the A/B test analysis and answers questions (a)–(f).
 """
-from model import get_retention_curve, compute_dau
+from model import compute_dau, compute_daily_revenue
 
 if __name__ == "__main__":
     days = 30
 
-    dau_a = compute_dau("A", days)
-    dau_b = compute_dau("B", days)
+    revenue_a = compute_daily_revenue("A", days)
+    revenue_b = compute_daily_revenue("B", days)
 
-    print(f"DAU Day 15 - Variant A: {int(dau_a[15]):,}")
-    print(f"DAU Day 15 - Variant B: {int(dau_b[15]):,}")
+    print(f"Total Revenue by Day 15 - A: ${revenue_a[:16].sum():,.0f}")
+    print(f"Total Revenue by Day 15 - B: ${revenue_b[:16].sum():,.0f}")
+
+    print(f"Total Revenue by Day 30 - A: ${revenue_a.sum():,.0f}")
+    print(f"Total Revenue by Day 30 - B: ${revenue_b.sum():,.0f}")

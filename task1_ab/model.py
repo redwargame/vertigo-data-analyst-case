@@ -21,6 +21,7 @@ RETENTION_POINTS = {
     },
 }
 
+
 def get_retention_curve(variant: str, max_day: int) -> np.ndarray:
     """
     Returns an array where index d represents retention on day d (1-based).
@@ -56,6 +57,7 @@ def get_retention_curve(variant: str, max_day: int) -> np.ndarray:
 
     return retention
 
+
 def compute_dau(
     variant: str,
     days: int,
@@ -79,3 +81,54 @@ def compute_dau(
         dau[current_day] = active_users
 
     return dau
+
+
+MONETIZATION = {
+    "A": {
+        "purchase_rate": 0.0305,
+        "ecpm": 9.80,
+        "ads_per_dau": 2.3,
+    },
+    "B": {
+        "purchase_rate": 0.0315,
+        "ecpm": 10.80,
+        "ads_per_dau": 1.6,
+    },
+}
+
+
+def purchase_revenue_per_dau(variant: str) -> float:
+    """
+    Returns expected purchase revenue per active user per day.
+    Assumes $1 revenue per purchase.
+    """
+    return MONETIZATION[variant]["purchase_rate"]
+
+def ad_revenue_per_dau(variant: str) -> float:
+    """
+    Returns expected ad revenue per active user per day.
+    """
+    m = MONETIZATION[variant]
+    return (m["ads_per_dau"] * m["ecpm"]) / 1000
+
+
+def compute_daily_revenue(
+    variant: str,
+    days: int,
+    daily_installs: int = 20000,
+) -> np.ndarray:
+    """
+    Computes total daily revenue over time.
+    """
+    dau = compute_dau(variant, days)
+    revenue = np.zeros(days + 1)
+
+    rev_per_dau = (
+        purchase_revenue_per_dau(variant)
+        + ad_revenue_per_dau(variant)
+    )
+
+    for d in range(1, days + 1):
+        revenue[d] = dau[d] * rev_per_dau
+
+    return revenue
