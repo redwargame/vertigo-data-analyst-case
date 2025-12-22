@@ -55,3 +55,27 @@ def get_retention_curve(variant: str, max_day: int) -> np.ndarray:
         retention[d] = decay
 
     return retention
+
+def compute_dau(
+    variant: str,
+    days: int,
+    daily_installs: int = 20000,
+) -> np.ndarray:
+    """
+    Computes Daily Active Users (DAU) for a given variant over a number of days.
+    DAU is calculated using cohort-based retention.
+    """
+    retention = get_retention_curve(variant, days)
+    dau = np.zeros(days + 1)
+
+    for current_day in range(1, days + 1):
+        active_users = 0.0
+
+        # Sum contribution of all cohorts
+        for install_day in range(1, current_day + 1):
+            age = current_day - install_day + 1
+            active_users += daily_installs * retention[age]
+
+        dau[current_day] = active_users
+
+    return dau
