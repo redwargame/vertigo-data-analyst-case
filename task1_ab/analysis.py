@@ -34,3 +34,17 @@ if __name__ == "__main__":
     print("\nWith 10-day sale :")
     print(f"Total Revenue by Day 30 - A: ${revenue_a_sale.sum():,.0f}")
     print(f"Total Revenue by Day 30 - B: ${revenue_b_sale.sum():,.0f}")
+
+
+
+from model import compute_revenue_with_new_source
+
+if __name__ == "__main__":
+    days = 30
+
+    revenue_a_new = compute_revenue_with_new_source("A", days)
+    revenue_b_new = compute_revenue_with_new_source("B", days)
+
+    print("\nWith new user source from Day 20:")
+    print(f"Total Revenue by Day 30 - A: ${revenue_a_new.sum():,.0f}")
+    print(f"Total Revenue by Day 30 - B: ${revenue_b_new.sum():,.0f}")

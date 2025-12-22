@@ -161,3 +161,70 @@ def compute_daily_revenue_with_sale(
         revenue[d] = dau[d] * rev_per_dau
 
     return revenue
+
+
+def new_source_retention(variant: str, day: int) -> float:
+    """
+    Retention function for new user source.
+    """
+    if variant == "A":
+        return 0.58 * np.exp(-0.12 * (day - 1))
+    elif variant == "B":
+        return 0.52 * np.exp(-0.10 * (day - 1))
+    else:
+        raise ValueError("Unknown variant")
+
+
+def compute_dau_with_new_source(
+    variant: str,
+    days: int,
+    old_installs: int = 12000,
+    new_installs: int = 8000,
+    switch_day: int = 20,
+) -> np.ndarray:
+    """
+    Computes DAU when a new user source is added on a given day.
+    """
+    dau = np.zeros(days + 1)
+
+    old_retention = get_retention_curve(variant, days)
+
+    for current_day in range(1, days + 1):
+        active_users = 0.0
+
+        # Old source users
+        for install_day in range(1, current_day + 1):
+            installs = 20000 if install_day < switch_day else old_installs
+            age = current_day - install_day + 1
+            active_users += installs * old_retention[age]
+
+        # New source users (only after switch day)
+        if current_day >= switch_day:
+            for install_day in range(switch_day, current_day + 1):
+                age = current_day - install_day + 1
+                active_users += new_installs * new_source_retention(variant, age)
+
+        dau[current_day] = active_users
+
+    return dau
+
+
+def compute_revenue_with_new_source(
+    variant: str,
+    days: int,
+) -> np.ndarray:
+    """
+    Computes revenue when a new user source is added.
+    """
+    dau = compute_dau_with_new_source(variant, days)
+    revenue = np.zeros(days + 1)
+
+    rev_per_dau = (
+        MONETIZATION[variant]["purchase_rate"]
+        + ad_revenue_per_dau(variant)
+    )
+
+    for d in range(1, days + 1):
+        revenue[d] = dau[d] * rev_per_dau
+
+    return revenue
