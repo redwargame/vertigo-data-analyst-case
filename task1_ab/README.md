@@ -42,7 +42,7 @@ These assumptions are made to keep the model simple while allowing meaningful co
 ![DAU Over Time](figures/dau_over_time.png)
 
 ### Cumulative Revenue (Baseline)
-![Baseline Revenue](figures/cumulative_revenue_baseline.png)
+![Baseline Revenue](figures/revenue.png)
 
 ### Cumulative Revenue Across Scenarios
-![Revenue Scenarios](figures/cumulative_revenue_scenarios.png)
+![Revenue Scenarios](figures/revenue_comparison.png)
