@@ -1,9 +1,12 @@
 """
 Visualization utilities for Task 1 results.
+
+Run the following command from the project root:
+    python -m task1_ab.plots
 """
 
+
 import matplotlib.pyplot as plt
-import numpy as np
 
 from .model import (
     compute_dau,
@@ -24,7 +27,9 @@ def plot_dau(days: int = 30):
     plt.xlabel("Day")
     plt.ylabel("DAU")
     plt.legend()
+    plt.savefig("task1_ab/figures/dau_over_time.png", bbox_inches="tight")
     plt.show()
+    plt.close()
 
 
 def plot_cumulative_revenue(days: int = 30):
@@ -38,7 +43,9 @@ def plot_cumulative_revenue(days: int = 30):
     plt.xlabel("Day")
     plt.ylabel("Total Revenue")
     plt.legend()
+    plt.savefig("task1_ab/figures/revenue.png", bbox_inches="tight")
     plt.show()
+    plt.close()
 
 
 def plot_revenue_scenarios(days: int = 30):
@@ -63,7 +70,9 @@ def plot_revenue_scenarios(days: int = 30):
     plt.xlabel("Day")
     plt.ylabel("Total Revenue")
     plt.legend()
+    plt.savefig("task1_ab/figures/revenue_comparison.png", bbox_inches="tight")
     plt.show()
+    plt.close()
 
 
 if __name__ == "__main__":

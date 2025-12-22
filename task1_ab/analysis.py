@@ -1,7 +1,7 @@
 """
 Runs the A/B test analysis and answers questions (a)–(f).
 """
-from .model import compute_dau, compute_daily_revenue
+from model import compute_dau, compute_daily_revenue
 
 if __name__ == "__main__":
     days = 30
@@ -16,7 +16,7 @@ if __name__ == "__main__":
     print(f"Total Revenue by Day 30 - B: ${revenue_b.sum():,.0f}")
 
 
-from .model import compute_daily_revenue_with_sale
+from model import compute_daily_revenue_with_sale
 
 if __name__ == "__main__":
     days = 30
@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
 
 
-from .model import compute_revenue_with_new_source
+from model import compute_revenue_with_new_source
 
 if __name__ == "__main__":
     days = 30
