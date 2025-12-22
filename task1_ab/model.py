@@ -132,3 +132,32 @@ def compute_daily_revenue(
         revenue[d] = dau[d] * rev_per_dau
 
     return revenue
+
+
+def compute_daily_revenue_with_sale(
+    variant: str,
+    days: int,
+    sale_start: int,
+    sale_end: int,
+    purchase_boost: float = 0.01,
+    daily_installs: int = 20000,
+) -> np.ndarray:
+    """
+    Computes daily revenue with a temporary sale that boosts purchase rates by %1.
+    """
+    dau = compute_dau(variant, days)
+    revenue = np.zeros(days + 1)
+
+    base_purchase_rate = MONETIZATION[variant]["purchase_rate"]
+    ad_rev_per_dau = ad_revenue_per_dau(variant)
+
+    for d in range(1, days + 1):
+        if sale_start <= d <= sale_end:
+            purchase_rate = base_purchase_rate + purchase_boost
+        else:
+            purchase_rate = base_purchase_rate
+
+        rev_per_dau = purchase_rate + ad_rev_per_dau
+        revenue[d] = dau[d] * rev_per_dau
+
+    return revenue
