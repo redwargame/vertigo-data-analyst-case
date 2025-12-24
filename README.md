@@ -23,8 +23,10 @@ In Task 1, two product variants (A and B) were modeled using assumptions around 
 **Visualizations (3):**
 1. Daily Active Users over time
 ![DAU Over Time](task1_ab/figures/dau_over_time.png)
+
 2. Baseline cumulative revenue comparison
 ![Baseline Revenue](task1_ab/figures/revenue.png)
+
 3. Revenue comparison across scenarios (baseline, sale, new user source)
 ![Revenue Scenarios](task1_ab/figures/revenue_comparison.png)
 
@@ -42,8 +44,10 @@ Task 2 focuses on understanding player behavior patterns using real gameplay and
 **Visualizations (3):**
 1. Revenue by Day-1 engagement segment
 ![Avg Revenue Per User](task2_eda/figures/revenue_by_engagement.png)
+
 2. Average session duration trend over time
 ![Avg Session Duration](task2_eda/figures/session_duration_trend.png)
+
 3. Revenue distribution across engagement segments
 ![Distribution of Revenue by User](task2_eda/figures/revenue_distribution.png)
 
